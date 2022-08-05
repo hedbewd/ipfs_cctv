@@ -1,10 +1,14 @@
-import './App.css';
+import React from 'react';
+import IpfsUploader from "./IpfsUploader";
 import WebcamStreamCapture from "./WebCam";
 
 
 function App() {
   return (
-    <WebcamStreamCapture />
+    <div>
+      <WebcamStreamCapture />
+      <IpfsUploader />
+    </div>
   );
 }
 
