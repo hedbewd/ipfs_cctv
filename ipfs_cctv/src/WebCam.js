@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 import Webcam from "react-webcam";
 
 function WebcamStreamCapture() {
@@ -35,22 +36,22 @@ function WebcamStreamCapture() {
       setCapturing(false);
     }, [mediaRecorderRef, webcamRef, setCapturing]);
   
-    const handleDownload = React.useCallback(() => {
-      if (recordedChunks.length) {
-        const blob = new Blob(recordedChunks, {
-          type: "video/webm"
-        });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        document.body.appendChild(a);
-        a.style = "display: none";
-        a.href = url;
-        a.download = "CCTV.webm";
-        a.click();
-        window.URL.revokeObjectURL(url);
-        setRecordedChunks([]);
-      }
-    }, [recordedChunks]);
+    // const handleDownload = React.useCallback(() => {
+    //   if (recordedChunks.length) {
+    //     const blob = new Blob(recordedChunks, {
+    //       type: "video/webm"
+    //     });
+    //     const url = URL.createObjectURL(blob);
+    //     const a = document.createElement("a");
+    //     document.body.appendChild(a);
+    //     a.style = "display: none";
+    //     a.href = url;
+    //     a.download = "CCTV.webm";
+    //     a.click();
+    //     window.URL.revokeObjectURL(url);
+    //     setRecordedChunks([]);
+    //   }
+    // }, [recordedChunks]);
 
     const autoDownload = React.useCallback(() => {
       if (recordedChunks.length) {
@@ -68,8 +69,14 @@ function WebcamStreamCapture() {
         setRecordedChunks([]);
       }
     }, [recordedChunks]);
-    // let timer = setTimeout(()=>{setCapturing(true)}, 5000);
-    // let timer = setTimeout(()=>{handleStopCaptureClick()}, 5000);
+    
+    const autoClick = React.useCallback(() => {
+      document.getElementById("chk").click();
+    })
+
+    useEffect(()=>{
+      let timer = setTimeout(()=>{autoClick()}, 1000);
+    });
 
     return (
       <>
@@ -78,8 +85,9 @@ function WebcamStreamCapture() {
           // <button onClick={handleStopCaptureClick}>Stop Capture</button>
           null
         ) : (
-          <button onClick={handleStartCaptureClick}>Start Capture</button>
+          <button onClick={handleStartCaptureClick} id="chk">Start Capture</button>
         )}
+
         {recordedChunks.length > 0 && (
           // <button onClick={handleDownload}>Download</button>
           autoDownload()
