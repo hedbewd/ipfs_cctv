@@ -74,9 +74,9 @@ function WebcamStreamCapture() {
       document.getElementById("chk").click();
     })
 
-    useEffect(()=>{
-      let timer = setTimeout(()=>{autoClick()}, 1000);
-    });
+    // useEffect(()=>{
+    //   let timer = setTimeout(()=>{autoClick()}, 1000);
+    // });
 
     return (
       <>
